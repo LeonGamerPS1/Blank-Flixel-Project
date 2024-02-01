@@ -31,7 +31,6 @@ class Main extends Sprite {
 		FlxG.autoPause = false;
 		FlxG.fixedTimestep = false;
 		FlxG.mouse.useSystemCursor = true;
-		FlxGraphic.defaultPersist = false;
 	}
 
 	@:functionCode('
