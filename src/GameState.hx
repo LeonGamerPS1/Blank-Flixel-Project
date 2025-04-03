@@ -9,10 +9,11 @@ class GameState extends flixel.FlxState {
 		conductor.time = 2;
 	
 
-		final text = new flixel.text.FlxText(0, 0, 1000, 'Hello World!', 30);
+		final text = new flixel.text.FlxText(0, 0, 1000, 'Hello Piece of shi-', 30);
 		text.active = false;
 		text.alignment = 'center';
 		text.screenCenter();
+		text.angularAcceleration = 2;
 		add(text);
 	}
 }
