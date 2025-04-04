@@ -35,4 +35,18 @@ typedef Event =
 class Song
 {
 	private static var _cache(default, null):Map<String, SongMap> = new Map<String, SongMap>();
+
+	public static function grabSong(songID:String = "tutorial", jsonName:String = "normal"):SongMap
+	{
+		var id:String = songID + '-$jsonName';
+		if (_cache.exists(id))
+			return Reflect.copy(_cache.get(id));
+		if (Assets.exists('assets/songs/$songID/$jsonName.json'))
+		{
+			var json = Json.parse(Assets.getText('assets/songs/$songID/$jsonName.json'));
+			_cache.set(id, json);
+			return Reflect.copy(json);
+		}
+		return cast {};
+	}
 }

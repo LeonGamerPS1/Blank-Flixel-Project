@@ -1,11 +1,15 @@
-package;
+package funkin.states;
 
+import funkin.system.backend.Song.SongMap;
 import flixel.tweens.FlxTween;
 
-class GameState extends flixel.FlxState {
+class PlayState extends flixel.FlxState {
 
 	public var conductor:Conductor;
+	public static var song:SongMap;
+
 	override public function create() { 
+		song ??= Song.grabSong();
 		super.create();
 		conductor = new Conductor(102);
 		conductor.time = 2;
