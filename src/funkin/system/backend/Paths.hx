@@ -1,5 +1,6 @@
 package funkin.system.backend;
 
+import openfl.utils.Assets as OpenFlAssets;
 class Paths
 {
 	public static var sound_ext(default, null):String = ".ogg";
@@ -46,6 +47,8 @@ class Paths
 			var graphic = FlxG.bitmap.add(path);
 			var bitmap:BitmapData = graphic.bitmap;
 			bitmap.disposeImage();
+
+			trace('[SUCCESS] Successfully cached OpenflImagePath($path).');
 
 			graphic.destroyOnNoUse = false;
 			graphic.persist = true;

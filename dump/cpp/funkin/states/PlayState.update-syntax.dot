@@ -1,0 +1,71 @@
+digraph graphname {
+n416195 [shape=box,label="(416195)"];
+n416194 [shape=box,label="(416194)\nthis.notes.insert(0, dunceNote)\nhaxe.Log.trace(\"spawn\", {fileName : \"src/funkin/states/PlayState.hx\", lineNumber : 122, className : \"funkin.states.PlayState\", methodName : \"update\"})\nthis.lastNoteIndex ++"];
+n416193 [shape=box,label="(416193)\nvar _hx_tmp = \"fun\"(416191)\n_this.members.sort(_hx_tmp)"];
+n416192 [shape=box,label="<function-end>
+(416192)"];
+n416191 [shape=box,label="<function-begin>
+(416191)"];
+n416190 [shape=box,label="(416190)\nvar _this = this.notes\nvar _g = this.sortNotesByTimeHelper\nvar a1 = 1"];
+n416190 -> n416193[style="dashed",color="gray",label="merge"];
+n416189 [shape=box,label="(416189)\nvar dunceNote = funkin.states.PlayState.song.notes[this.lastNoteIndex]\nvar dunceNote = new funkin.graphics.Note(dunceNote)"];
+n416189 -> n416190[style="dashed",color="gray",label="sub"];
+n416189 -> n416194[style="dashed",color="gray",label="next"];
+n416188 [shape=box,label="(416188)"];
+n416187 [shape=box,label="(416187)\nvar _hx_tmp = funkin.states.PlayState.song.notes[this.lastNoteIndex].time - this.conductor.time\nvar _hx_tmp = ! ((_hx_tmp < time))"];
+n416187 -> n416188[style="dashed",color="gray",label="then"];
+n416187 -> n416189[style="dashed",color="gray",label="next"];
+n416186 [shape=box,label="<loop-head>
+(416186)"];
+n416186 -> n416187[style="dashed",color="gray",label="loop-body"];
+n416186 -> n416195[style="dashed",color="gray",label="next"];
+n416185 [shape=box,label="(416185)"];
+n416185 -> n416186[style="dashed",color="gray",label="merge"];
+n416184 [shape=box,label="(416184)\ntime = time / this.songSpeed"];
+n416183 [shape=box,label="(416183)"];
+n416182 [shape=box,label="(416182)\nvar time = 3000\nvar _hx_tmp = this.songSpeed < 1"];
+n416182 -> n416184[style="dashed",color="gray",label="then"];
+n416182 -> n416185[style="dashed",color="gray",label="next"];
+n416181 [shape=box,label="(416181)\nvar _hx_tmp = funkin.states.PlayState.song.notes[this.lastNoteIndex]\nvar _hx_tmp = _hx_tmp != null"];
+n416180 [shape=box,label="(416180)\nvar _hx_tmp = this.startedCountdown"];
+n416179 [shape=box,label="(416179)"];
+n416178 [shape=box,label="(416178)"];
+n416177 [shape=box,label="(416177)"];
+n416176 [shape=box,label="(416176)\nvar this = this.tracks\nvar _this = cast this.get(\"main\")\nvar _hx_tmp = _this._time\nkvIt_value.set_time(_hx_tmp)"];
+n416175 [shape=box,label="(416175)\nvar kvIt_value\nvar kvIt_key\nvar key = kvIt_keys.next()\nkvIt_value = @:nullSafety(Off) cast kvIt_map.get(key)\nkvIt_key = key\nvar kvIt_value = kvIt_value._time\nvar this = this.tracks\nvar _this = cast this.get(\"main\")\nvar _hx_tmp = _this._time\nvar _hx_tmp = kvIt_value - _hx_tmp\nvar _hx_tmp = Math.abs(_hx_tmp)\nvar _hx_tmp = _hx_tmp > 20"];
+n416175 -> n416176[style="dashed",color="gray",label="then"];
+n416175 -> n416177[style="dashed",color="gray",label="next"];
+n416174 [shape=box,label="(416174)"];
+n416173 [shape=box,label="(416173)\nvar _hx_tmp = ! ((kvIt_keys.hasNext()))"];
+n416173 -> n416174[style="dashed",color="gray",label="then"];
+n416173 -> n416175[style="dashed",color="gray",label="next"];
+n416172 [shape=box,label="<loop-head>
+(416172)"];
+n416172 -> n416173[style="dashed",color="gray",label="loop-body"];
+n416172 -> n416178[style="dashed",color="gray",label="next"];
+n416171 [shape=box,label="(416171)\nvar kvIt_map\nvar kvIt_keys\nvar this = this.tracks\nvar map = cast this\nkvIt_map = map\nkvIt_keys = map.keys()"];
+n416171 -> n416172[style="dashed",color="gray",label="merge"];
+n416170 [shape=box,label="(416170)\nvar _hx_tmp = this.conductor\nvar this = this.tracks\nvar _this = cast this.get(\"main\")\nvar _hx_tmp = _this._time\n_hx_tmp.set_time(_hx_tmp)"];
+n416170 -> n416171[style="dashed",color="gray",label="sub"];
+n416170 -> n416179[style="dashed",color="gray",label="next"];
+n416169 [shape=box,label="(416169)\nvar _hx_tmp = this.startedSong"];
+n416169 -> n416170[style="dashed",color="gray",label="then"];
+n416169 -> n416180[style="dashed",color="gray",label="next"];
+n416168 [shape=box,label="(416168)"];
+n416167 [shape=box,label="(416167)"];
+n416166 [shape=box,label="(416166)\nthis.startSong()"];
+n416165 [shape=box,label="(416165)\nvar fh = this.conductor\nvar fh = fh.time\nvar _hx_tmp = flixel.FlxG.elapsed * 1000\nvar _hx_tmp = fh + _hx_tmp\nfh.set_time(_hx_tmp)\nvar _hx_tmp = this.conductor.time >= 0"];
+n416165 -> n416166[style="dashed",color="gray",label="then"];
+n416165 -> n416167[style="dashed",color="gray",label="next"];
+n416164 [shape=box,label="(416164)\nvar _hx_tmp = this.startedCountdown"];
+n416164 -> n416165[style="dashed",color="gray",label="then"];
+n416164 -> n416168[style="dashed",color="gray",label="next"];
+n416163 [shape=box,label="<function-end>
+(416163)"];
+n416162 [shape=box,label="<function-begin>
+(416162)\nvar _hx_tmp = ! this.startedSong"];
+n416162 -> n416164[style="dashed",color="gray",label="then"];
+n416162 -> n416169[style="dashed",color="gray",label="next"];
+n1 [shape=box,label="<root>
+(1)"];
+}

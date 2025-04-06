@@ -1,0 +1,200 @@
+digraph graphname {
+	node [shape=plaintext];
+n416195[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416195) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416194[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416194) BKNormal</td></tr>
+	<tr><td port="e0" align="left">this.notes.insert(0, dunceNote)</td></tr>
+	<tr><td port="e1" align="left">haxe.Log.trace(\"spawn\", {fileName : \"src/funkin/states/PlayState.hx\", lineNumber : 122, className : \"funkin.states.PlayState\", methodName : \"update\"})</td></tr>
+	<tr><td port="e2" align="left">this.lastNoteIndex ++</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416193[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416193) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var _hx_tmp = \"fun\"(416191)</td></tr>
+	<tr><td port="e1" align="left">_this.members.sort(_hx_tmp)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416192[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416192) BKFunctionEnd</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416191[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416191) BKFunctionBegin</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416190[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416190) BKSub</td></tr>
+	<tr><td port="e0" align="left">var _this = this.notes</td></tr>
+	<tr><td port="e1" align="left">var _g = this.sortNotesByTimeHelper</td></tr>
+	<tr><td port="e2" align="left">var a1 = 1</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416189[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416189) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var dunceNote = funkin.states.PlayState.song.notes[this.lastNoteIndex]</td></tr>
+	<tr><td port="e1" align="left">var dunceNote = new funkin.graphics.Note(dunceNote)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416188[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416188) BKConditional</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416187[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416187) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var _hx_tmp = funkin.states.PlayState.song.notes[this.lastNoteIndex].time - this.conductor.time</td></tr>
+	<tr><td port="e1" align="left">var _hx_tmp = ! ((_hx_tmp &lt; time))</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416186[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416186) BKLoopHead</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416185[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416185) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416184[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416184) BKConditional</td></tr>
+	<tr><td port="e0" align="left">time = time / this.songSpeed</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416183[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416183) BKConditional</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416182[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416182) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var time = 3000</td></tr>
+	<tr><td port="e1" align="left">var _hx_tmp = this.songSpeed &lt; 1</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416181[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416181) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var _hx_tmp = funkin.states.PlayState.song.notes[this.lastNoteIndex]</td></tr>
+	<tr><td port="e1" align="left">var _hx_tmp = _hx_tmp != null</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416180[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416180) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var _hx_tmp = this.startedCountdown</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416179[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416179) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416178[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416178) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416177[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416177) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416176[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416176) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var this = this.tracks</td></tr>
+	<tr><td port="e1" align="left">var _this = cast this.get(\"main\")</td></tr>
+	<tr><td port="e2" align="left">var _hx_tmp = _this._time</td></tr>
+	<tr><td port="e3" align="left">kvIt_value.set_time(_hx_tmp)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416175[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416175) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var kvIt_value</td></tr>
+	<tr><td port="e1" align="left">var kvIt_key</td></tr>
+	<tr><td port="e2" align="left">var key = kvIt_keys.next()</td></tr>
+	<tr><td port="e3" align="left">kvIt_value = @:nullSafety(Off) cast kvIt_map.get(key)</td></tr>
+	<tr><td port="e4" align="left">kvIt_key = key</td></tr>
+	<tr><td port="e5" align="left">var kvIt_value = kvIt_value._time</td></tr>
+	<tr><td port="e6" align="left">var this = this.tracks</td></tr>
+	<tr><td port="e7" align="left">var _this = cast this.get(\"main\")</td></tr>
+	<tr><td port="e8" align="left">var _hx_tmp = _this._time</td></tr>
+	<tr><td port="e9" align="left">var _hx_tmp = kvIt_value - _hx_tmp</td></tr>
+	<tr><td port="e10" align="left">var _hx_tmp = Math.abs(_hx_tmp)</td></tr>
+	<tr><td port="e11" align="left">var _hx_tmp = _hx_tmp &gt; 20</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416174[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416174) BKConditional</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416173[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416173) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var _hx_tmp = ! ((kvIt_keys.hasNext()))</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416172[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416172) BKLoopHead</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416171[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416171) BKSub</td></tr>
+	<tr><td port="e0" align="left">var kvIt_map</td></tr>
+	<tr><td port="e1" align="left">var kvIt_keys</td></tr>
+	<tr><td port="e2" align="left">var this = this.tracks</td></tr>
+	<tr><td port="e3" align="left">var map = cast this</td></tr>
+	<tr><td port="e4" align="left">kvIt_map = map</td></tr>
+	<tr><td port="e5" align="left">kvIt_keys = map.keys()</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416170[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416170) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var _hx_tmp = this.conductor</td></tr>
+	<tr><td port="e1" align="left">var this = this.tracks</td></tr>
+	<tr><td port="e2" align="left">var _this = cast this.get(\"main\")</td></tr>
+	<tr><td port="e3" align="left">var _hx_tmp = _this._time</td></tr>
+	<tr><td port="e4" align="left">_hx_tmp.set_time(_hx_tmp)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416169[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416169) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var _hx_tmp = this.startedSong</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416168[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416168) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416167[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416167) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416166[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416166) BKConditional</td></tr>
+	<tr><td port="e0" align="left">this.startSong()</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416165[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416165) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var fh = this.conductor</td></tr>
+	<tr><td port="e1" align="left">var fh = fh.time</td></tr>
+	<tr><td port="e2" align="left">var _hx_tmp = flixel.FlxG.elapsed * 1000</td></tr>
+	<tr><td port="e3" align="left">var _hx_tmp = fh + _hx_tmp</td></tr>
+	<tr><td port="e4" align="left">fh.set_time(_hx_tmp)</td></tr>
+	<tr><td port="e5" align="left">var _hx_tmp = this.conductor.time &gt;= 0</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416164[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416164) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var _hx_tmp = this.startedCountdown</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416163[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416163) BKFunctionEnd</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n416162[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(416162) BKFunctionBegin</td></tr>
+	<tr><td port="e0" align="left">var _hx_tmp = ! this.startedSong</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n1[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(1) BKRoot</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n1:out -> n416162:in[label="CFGFunction"];
+}

@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://lime.software/project/1.0.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://lime.software/project/1.0.2 http://lime.software/xsd/project-1.0.2.xsd">
+<project xmlns="http://lime.software/project/1.0.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://lime.software/project/1.0.2 http://lime.software/project/1.0.2">
 
 	<!-- _________________________ Application Settings _________________________ -->
-	<app title="Blank Flixel Project" file="Game" main="Main" version="1.0.0" company="com.company.game" />
+	<app title="FunkinVanilla 0.0.1 prototype" file="FV001" main="Main" version="0.1.1"
+		company="com.lgps1.fv001" />
 
 	<!-- ____________________________ Window Settings ___________________________ -->
 
-	<!--These window settings apply to all targets-->
-	<window width="1280" height="720" fps="" background="#000000" hardware="true" vsync="false" />
+	<!--These
+	window settings apply to all targets-->
+	<window width="1280" height="720" fps="120" background="#000000" hardware="true" vsync="false" />
 
 	<!--Desktop-specific-->
-	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true"/>
-	<window antialiasing="0" allow-high-dpi="true"/>
+	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" />
+	<window antialiasing="0" allow-high-dpi="true" />
 
 	<!-- _____________________________ Path Settings ____________________________ -->
 
@@ -20,30 +23,63 @@
 	<set name="BUILD_DIR" value="export/release" unless="debug" />
 	<set name="BUILD_DIR" value="export/32bit" if="32bits" />
 	<source path="src" />
-	<assets path="assets" />
+	<assets path="assets" preload="false" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
+	<haxelib name="flixel-controls" />
+	<haxelib name="flixel-addons" />
+	<haxelib name="moonchart" />
 
-	<!--Optimise inputs, be careful you will get null errors if you don't use conditionals in your game-->
+	<!--Optimise
+	inputs, be careful you will get null errors if you don't use conditionals in your game-->
 	<haxedef name="FLX_NO_MOUSE" if="mobile" />
 	<haxedef name="FLX_NO_KEYBOARD" if="mobile" />
 	<haxedef name="FLX_NO_TOUCH" if="desktop" />
 
-	<!--Disable the Flixel core debugger. Automatically gets set whenever you compile in release mode!-->
+
+	<!--Disable
+	the Flixel core debugger. Automatically gets set whenever you compile in release mode!-->
 	<haxedef name="FLX_NO_DEBUG" unless="debug" />
 
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<haxedef name="no-deprecation-warnings" />
-	
-	<!--Allow working memory greater than 1 gig-->
-	<haxedef name="HXCPP_GC_BIG_BLOCKS" if="desktop"/>
-	<!--RELEASE EXCEPTION Handling!!-->
-	<haxedef name="HXCPP_CHECK_POINTER" />
-    <haxedef name="HXCPP_STACK_LINE" />
-    <haxedef name="HXCPP_STACK_TRACE" />
 
-	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
+	<!--Allow
+	working memory greater than 1 gig-->
+	<haxedef name="HXCPP_GC_BIG_BLOCKS" if="desktop" />
+	<!--RELEASE
+	EXCEPTION Handling!!-->
+	<haxedef name="HXCPP_CHECK_POINTER" />
+	<haxedef name="HXCPP_STACK_LINE" />
+	<haxedef name="HXCPP_STACK_TRACE" />
+
+	<section if="polymod">
+		<!-- Turns on additional debug logging. -->
+		<haxedef name="POLYMOD_DEBUG" value="true" if="debug" />
+		<!-- The file extension to use for script files. -->
+		<haxedef name="POLYMOD_SCRIPT_EXT" value=".hscript" />
+		<!-- Which asset library to use for scripts. -->
+		<haxedef name="POLYMOD_SCRIPT_LIBRARY" value="scripts" />
+		<!-- The base path from which scripts should be accessed. -->
+		<haxedef name="POLYMOD_ROOT_PATH" value="scripts/" />
+		<!-- Determines the subdirectory of the mod folder used for file appending. -->
+		<haxedef name="POLYMOD_APPEND_FOLDER" value="_append" />
+		<!-- Determines the subdirectory of the mod folder used for file merges. -->
+		<haxedef name="POLYMOD_MERGE_FOLDER" value="_merge" />
+		<!-- Determines the file in the mod folder used for metadata. -->
+		<haxedef name="POLYMOD_MOD_METADATA_FILE" value="_polymod_meta.json" />
+		<!-- Determines the file in the mod folder used for the icon. -->
+		<haxedef name="POLYMOD_MOD_ICON_FILE" value="_polymod_icon.png" />
+	</section>
+
+
+	<!--Place
+	custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
+	<icon path="art/icon16.png" size="16" />
+	<icon path="art/icon32.png" size="32" />
+	<icon path="art/icon64.png" size="64" />
+	<icon path="art/iconOG.png" />
 </project>

@@ -15,7 +15,7 @@ import lime.app.Event;
 @:publicFields
 class Conductor
 {
-	static /**
+	/**
 		A signal that dispatches every step.
 	**/
 	var onStep:Event<Float->Void> = new Event<Float->Void>();
@@ -139,6 +139,11 @@ class Conductor
 		The beat count of a measure.
 	**/
 	var denominator:Float = 4;
+
+
+
+	public static var safeFrames:Int = 10;
+	public static var safeZoneOffset:Float = (safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
 
 	/**
 		Change the conductor's beats per minute.
