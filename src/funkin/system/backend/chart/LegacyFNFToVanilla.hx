@@ -34,12 +34,12 @@ class LegacyFNFToVanilla
 
 			for (section in legacyJson.data.song.notes)
 			{
-				var sectionTime:Float = beatLength * (legacyJson.data.song.notes.indexOf(section) + 1);
+				var sectionTime:Float = (beatLength * 4) * (legacyJson.data.song.notes.indexOf(section) + 1);
 				if (section.changeBPM == true)
 				{
 					beatLength = 60 / output.bpm;
 					beatLength *= 1000;
-					sectionTime = beatLength * (legacyJson.data.song.notes.indexOf(section) + 1);
+					sectionTime = (beatLength * 4) * (legacyJson.data.song.notes.indexOf(section) + 1);
 
 					output.bpmMap.push({
 						time: sectionTime,

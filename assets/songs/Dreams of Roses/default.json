@@ -7,77 +7,14 @@
     "events": [
         {
             "name": "Camera Focus",
-            "time": 451.127819548872,
-            "values": [
-                "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 902.255639097744,
-            "values": [
-                "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 1353.38345864662,
-            "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
             "time": 1804.51127819549,
             "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 2255.63909774436,
-            "values": [
                 "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 2706.76691729323,
-            "values": [
-                "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 3157.8947368421,
-            "values": [
-                "bf"
             ]
         },
         {
             "name": "Camera Focus",
             "time": 3609.02255639098,
-            "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 4060.15037593985,
-            "values": [
-                "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 4511.27819548872,
-            "values": [
-                "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 4962.40601503759,
             "values": [
                 "dad"
             ]
@@ -85,27 +22,6 @@
         {
             "name": "Camera Focus",
             "time": 5413.53383458647,
-            "values": [
-                "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 5864.66165413534,
-            "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 6315.78947368421,
-            "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 6766.91729323308,
             "values": [
                 "bf"
             ]
@@ -119,27 +35,6 @@
         },
         {
             "name": "Camera Focus",
-            "time": 7669.17293233083,
-            "values": [
-                "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 8120.3007518797,
-            "values": [
-                "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 8571.42857142857,
-            "values": [
-                "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
             "time": 9022.55639097744,
             "values": [
                 "dad"
@@ -147,77 +42,14 @@
         },
         {
             "name": "Camera Focus",
-            "time": 9473.68421052631,
-            "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 9924.81203007519,
-            "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 10375.9398496241,
-            "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
             "time": 10827.0676691729,
             "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 11278.1954887218,
-            "values": [
                 "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 11729.3233082707,
-            "values": [
-                "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 12180.4511278195,
-            "values": [
-                "bf"
             ]
         },
         {
             "name": "Camera Focus",
             "time": 12631.5789473684,
-            "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 13082.7067669173,
-            "values": [
-                "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 13533.8345864662,
-            "values": [
-                "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 13984.962406015,
             "values": [
                 "bf"
             ]
@@ -231,49 +63,7 @@
         },
         {
             "name": "Camera Focus",
-            "time": 14887.2180451128,
-            "values": [
-                "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 15338.3458646617,
-            "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 15789.4736842105,
-            "values": [
-                "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
             "time": 16240.6015037594,
-            "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 16691.7293233083,
-            "values": [
-                "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 17142.8571428571,
-            "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 17593.984962406,
             "values": [
                 "dad"
             ]
@@ -282,61 +72,271 @@
             "name": "Camera Focus",
             "time": 18045.1127819549,
             "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 18496.2406015038,
-            "values": [
                 "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 18947.3684210526,
-            "values": [
-                "dad"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 19398.4962406015,
-            "values": [
-                "bf"
             ]
         },
         {
             "name": "Camera Focus",
             "time": 19849.6240601504,
             "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 20300.7518796992,
-            "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 20751.8796992481,
-            "values": [
-                "bf"
-            ]
-        },
-        {
-            "name": "Camera Focus",
-            "time": 21203.007518797,
-            "values": [
-                "bf"
+                "dad"
             ]
         },
         {
             "name": "Camera Focus",
             "time": 21654.1353383459,
+            "values": [
+                "dad"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 23458.6466165414,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 25263.1578947368,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 27067.6691729323,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 28872.1804511278,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 30676.6917293233,
+            "values": [
+                "dad"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 32481.2030075188,
+            "values": [
+                "dad"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 34285.7142857143,
+            "values": [
+                "dad"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 36090.2255639098,
+            "values": [
+                "dad"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 37894.7368421053,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 39699.2481203007,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 41503.7593984962,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 43308.2706766917,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 45112.7819548872,
+            "values": [
+                "dad"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 46917.2932330827,
+            "values": [
+                "dad"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 48721.8045112782,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 50526.3157894737,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 52330.8270676692,
+            "values": [
+                "dad"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 54135.3383458647,
+            "values": [
+                "dad"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 55939.8496240601,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 57744.3609022556,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 59548.8721804511,
+            "values": [
+                "dad"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 61353.3834586466,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 63157.8947368421,
+            "values": [
+                "dad"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 64962.4060150376,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 66766.9172932331,
+            "values": [
+                "dad"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 68571.4285714286,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 70375.9398496241,
+            "values": [
+                "dad"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 72180.4511278195,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 73984.962406015,
+            "values": [
+                "dad"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 75789.4736842105,
+            "values": [
+                "dad"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 77593.984962406,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 79398.4962406015,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 81203.007518797,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 83007.5187969925,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 84812.030075188,
+            "values": [
+                "bf"
+            ]
+        },
+        {
+            "name": "Camera Focus",
+            "time": 86616.5413533835,
             "values": [
                 "bf"
             ]
@@ -2629,15 +2629,13 @@
         "gf-pixel",
         "bf-pixel"
     ],
-    "songName": "Dreams of Roses",
+    "songName": "Dreams Of Roses",
     "speed": 2,
     "tracks": {
         "extra": [
-            "songs/Dreams of Roses/Boyfriend.ogg",
             "songs/Dreams of Roses/Senpai.ogg",
+            "songs/Dreams of Roses/Boyfriend.ogg",
             "songs/Dreams of Roses/Monika.ogg"
-    
-        
         ],
         "main": "songs/Dreams of Roses/Inst.ogg"
     }

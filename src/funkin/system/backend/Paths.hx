@@ -1,6 +1,7 @@
 package funkin.system.backend;
 
 import openfl.utils.Assets as OpenFlAssets;
+
 class Paths
 {
 	public static var sound_ext(default, null):String = ".ogg";
@@ -265,5 +266,34 @@ class Paths
 
 		file = getPath('images/$character', IMAGE);
 		return file;
+	}
+
+	/*
+	 * Wack Ass Attempt To Make An OpenFl Equivalent For `FileSystem.readDirectory`
+	 * @param path Directory To Scan. Doesn't Need the `assets/` prefix.
+	 * @param type Type Of Files To List. "" Gets All Files While "TEXT" Will Only Retrieve Text Files (duh)
+	 * @param suffix The Suffix Of The Files To Find. .lua Would Only Return Lua Files.
+	 * @param removePath To Keep The `assets/path` Prefix When Returned. If True, It'll Just Be The Name Of The File With The Extension.
+	 * @return Array<String>
+	 */
+	public static function readAssetsDirectoryFromLibrary(path:String, ?type:String, ?suffix:String = "", ?removePath:Bool = false):Array<String>
+	{
+		final lib = lime.utils.Assets.getLibrary('default');
+		final list:Array<String> = lib.list(type);
+		path = 'assets/$path';
+		var stringList:Array<String> = [];
+		for (hmm in list)
+		{
+			if (!hmm.startsWith(path) || !hmm.endsWith(suffix))
+				continue;
+			var bruh:String = null;
+			if (removePath)
+				bruh = hmm.replace('$path/', '');
+			else
+				bruh = hmm;
+			stringList.push(bruh);
+		}
+		stringList.sort(Reflect.compare);
+		return stringList;
 	}
 }

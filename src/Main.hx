@@ -37,6 +37,8 @@ class Main extends Sprite
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsCounter);
 
+		trace(Paths.readAssetsDirectoryFromLibrary('weeks','TEXT',''));
+
 
 		
 		#if !html5

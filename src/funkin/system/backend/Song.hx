@@ -53,7 +53,7 @@ class Song
 {
 	private static var _cache(default, null):Map<String, SongMap> = new Map<String, SongMap>();
 
-	public static function grabSong(songID:String = "Dreams of Roses", jsonName:String = "default"):SongMap
+	public static function grabSong(songID:String = "Monster", jsonName:String = "default"):SongMap
 	{
 		var id:String = songID + '-$jsonName';
 		if (_cache.exists(id))

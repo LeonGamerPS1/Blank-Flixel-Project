@@ -27,6 +27,10 @@ class PlayState extends flixel.FlxState
 	public var sustains:FlxTypedGroup<Sustain>;
 	public var playCpu:Bool = false;
 
+	public var health(default, set):Float = 1;
+	public var trackHealth:Float = 1;
+	public var downScroll:Bool = false;
+
 	override public function create()
 	{
 		super.create();
@@ -39,6 +43,8 @@ class PlayState extends flixel.FlxState
 		conductor.onBeat.add(beatHit);
 		conductor.onStep.add(stepHit);
 
+		for (i in song.events)
+			preloadEvent(i);
 		initChars();
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
@@ -47,10 +53,10 @@ class PlayState extends flixel.FlxState
 		uiGroup.cameras = [camHUD];
 		add(uiGroup);
 
-		cpuStrums = new StrumLine();
+		cpuStrums = new StrumLine(downScroll);
 		uiGroup.add(cpuStrums);
 
-		plrStrums = new StrumLine(false, true);
+		plrStrums = new StrumLine(downScroll, true);
 		uiGroup.add(plrStrums);
 
 		sustains = new FlxTypedGroup<Sustain>();
@@ -58,6 +64,22 @@ class PlayState extends flixel.FlxState
 
 		notes = new FlxTypedGroup<Note>();
 		uiGroup.add(notes);
+
+		healthBar = new Bar(0, !downScroll ? FlxG.height - 100 : 100, 'healthBar', () ->
+		{
+			return trackHealth;
+		}, 0, 2);
+		healthBar.setColors(FlxColor.RED, FlxColor.LIME);
+		healthBar.leftToRight = false;
+		healthBar.screenCenter(X);
+		uiGroup.add(healthBar);
+
+		iconP1 = new HealthIcon("bf", true);
+		iconP2 = new HealthIcon("dad");
+		uiGroup.add(iconP1);
+		uiGroup.add(iconP2);
+
+		iconP1.y = iconP2.y = healthBar.y - 75;
 
 		text = new FlxText(FlxG.width, FlxG.height - 18, 0, 'v0.0.1 PROTOTYPE | FUNKIN VANILLA');
 		text.setFormat(Paths.font('vcr'), 16, FlxColor.WHITE, RIGHT, OUTLINE, FlxColor.BLACK);
@@ -122,6 +144,10 @@ class PlayState extends flixel.FlxState
 	public var boyfriendCameraOffset:Array<Float> = [0, 0];
 	public var opponentCameraOffset:Array<Float> = [0, 0];
 	public var girlfriendCameraOffset:Array<Float> = [0, 0];
+
+	public var healthBar:Bar;
+	public var iconP1:HealthIcon;
+	public var iconP2:HealthIcon;
 
 	function initChars()
 	{
@@ -245,7 +271,47 @@ class PlayState extends flixel.FlxState
 			}
 		}
 
-		camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, Math.exp(-elapsed * 7));
+		var multi = 14;
+
+		var mult:Float = FlxMath.lerp(1, iconP1.scale.x, Math.exp(-elapsed * multi));
+		iconP1.scale.set(mult, mult);
+		iconP1.updateHitbox();
+
+		var mult:Float = FlxMath.lerp(1, iconP2.scale.x, Math.exp(-elapsed * multi));
+		iconP2.scale.set(mult, mult);
+		iconP2.updateHitbox();
+
+		// var center:Float = healthBar.x + healthBar.width * (healthBar.percent / 100);
+
+		var iconOffset:Int = 26;
+
+		iconP1.x = (healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset)) + 21;
+		iconP2.x = (healthBar.x
+			+ (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01))
+			- (iconP2.width - iconOffset))
+			- 20;
+
+		for (icon in [iconP1, iconP2])
+			icon.origin.y = icon.frameHeight;
+
+		if (healthBar.percent < 20)
+		{
+			iconP1.animation.curAnim.curFrame = 1;
+			iconP2.animation.curAnim.curFrame = iconP2.winningIconFrame;
+		}
+		else if (healthBar.percent > 80)
+		{
+			iconP2.animation.curAnim.curFrame = 1;
+			iconP1.animation.curAnim.curFrame = iconP1.winningIconFrame;
+		}
+		else
+		{
+			iconP2.animation.curAnim.curFrame = 0;
+			iconP1.animation.curAnim.curFrame = 0;
+		}
+
+		camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, Math.exp(-elapsed * 9));
+		trackHealth = FlxMath.lerp(health, trackHealth, Math.exp(-elapsed * 8));
 		super.update(elapsed);
 
 		for (daNote in notes)
@@ -286,11 +352,16 @@ class PlayState extends flixel.FlxState
 				invalidateNote(daNote);
 			}
 
+			if (daNote.tooLate && conductor.time - daNote.data.time > (350 / song.speed))
+			{
+				if (daNote.mustPress && !daNote.ignoreNote && !daNote.wasGoodHit && !daNote.missed)
+					noteMiss(daNote.data.data % 4);
+				daNote.missed = true;
+				daNote.multAlpha = 0.6;
+			}
+
 			if (conductor.time - daNote.data.time - daNote.sustainLength > (350 / song.speed))
 			{
-				if (daNote.mustPress && !daNote.ignoreNote && !daNote.wasGoodHit)
-					noteMiss(daNote.data.data % 4);
-
 				daNote.active = daNote.visible = false;
 				invalidateNote(daNote);
 			}
@@ -298,7 +369,12 @@ class PlayState extends flixel.FlxState
 		keyShit();
 	}
 
-	function noteMiss(i:Int = 0) {}
+	function noteMiss(i:Int = 0)
+	{
+		health -= 0.04;
+	}
+
+	public function preloadEvent(event:Event) {}
 
 	function invalidateNote(daNote:Note)
 	{
@@ -396,6 +472,12 @@ class PlayState extends flixel.FlxState
 	{
 		if (!(beat > 0))
 			return;
+		for (icon in [iconP1, iconP2])
+		{
+			icon.scale.set(1.2, 1.2);
+			icon.updateHitbox();
+		}
+
 		characterBopper(Std.int(beat));
 	}
 
@@ -439,11 +521,19 @@ class PlayState extends flixel.FlxState
 		{
 			coolNote.wasGoodHit = true;
 			// popUpScore(coolNote);
-			// health += 0.04;
+			health += 0.04;
 			strum.playAnim("confirm", true);
 		}
 
 		if (coolNote.wasGoodHit && _maxTime < conductor.time)
 			invalidateNote(coolNote);
+	}
+
+	function set_health(value:Float):Float
+	{
+		value = FlxMath.bound(value, 0, 2);
+		health = value;
+
+		return health = value;
 	}
 }

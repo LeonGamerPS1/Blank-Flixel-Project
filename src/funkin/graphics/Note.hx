@@ -24,6 +24,7 @@ class Note extends FlxSprite
 	public var clipPoint:FlxPoint = FlxPoint.get(0, 0);
 	public var ignoreNote:Bool = false;
 	public var tooLate:Bool = false;
+	public var missed:Bool = false;
 
 	public function new(data:NoteData, conductor:Conductor, ?isPixel:Bool = false)
 	{
@@ -107,6 +108,7 @@ class Note extends FlxSprite
 
 		x = object.x + offsetX;
 		y = object.y + (data.time - conductor.time) * (0.45 * speed * (!object.downScroll ? 1 : -1)) + offsetY;
+		alpha = object.alpha * multAlpha;
 	}
 
 	override function draw()
@@ -136,7 +138,7 @@ class Note extends FlxSprite
 			else
 				canBeHit = false;
 
-			if (data.time < conductor.time - Conductor.safeZoneOffset)
+			if (data.time < conductor.time - Conductor.safeZoneOffset && !wasGoodHit)
 				tooLate = true;
 		}
 	}
