@@ -1,3 +1,6 @@
 package funkin.graphics;
 
-class NonRoundedSprite extends FlxSprite {}
+class NonRoundedSprite extends FlxSprite
+{
+	
+}

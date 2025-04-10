@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://lime.software/project/1.0.2"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://lime.software/project/1.0.2 http://lime.software/project/1.0.2">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://lime.software/project/1.0.2 http://lime.software/project/1.0.2">
 
 	<!-- _________________________ Application Settings _________________________ -->
-	<app title="FunkinVanilla 0.0.1 prototype" file="FV001" main="Main" version="0.1.1"
-		company="com.lgps1.fv001" />
+	<app title="FunkinVanilla 0.0.1 prototype" file="FV001" main="Main" version="0.1.1" company="com.lgps1.fv001" />
 
 	<!-- ____________________________ Window Settings ___________________________ -->
 
@@ -24,6 +22,7 @@
 	<set name="BUILD_DIR" value="export/32bit" if="32bits" />
 	<source path="src" />
 	<assets path="assets" preload="false" />
+	<haxedef name="haxeui_dont_impose_base_class"/>
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
@@ -31,6 +30,9 @@
 	<haxelib name="flixel-controls" />
 	<haxelib name="flixel-addons" />
 	<haxelib name="moonchart" />
+	<haxelib name="haxeui-flixel" />
+	<haxelib name ="hxvm-lua" unless="hl"/>
+	<haxelib name ="linc_lua" unless="hl"/>
 
 	<!--Optimise
 	inputs, be careful you will get null errors if you don't use conditionals in your game-->

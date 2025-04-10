@@ -26,7 +26,7 @@ class Note extends FlxSprite
 	public var tooLate:Bool = false;
 	public var missed:Bool = false;
 
-	public function new(data:NoteData, conductor:Conductor, ?isPixel:Bool = false)
+	public function new(data:NoteData, conductor:Conductor, isSustainNote:Bool = false, ?isPixel:Bool = false, ?prevNote:Note)
 	{
 		super();
 		this.data = data;
@@ -35,6 +35,10 @@ class Note extends FlxSprite
 		this.conductor = conductor;
 		this.sustainLength = data.length;
 		this.isPixel = isPixel;
+		this.prevNote = prevNote;
+		this.isSustainNote = isSustainNote;
+	
+	
 
 		skin = 'NOTE_assets';
 	}
@@ -49,6 +53,8 @@ class Note extends FlxSprite
 	}
 
 	public var isPixel:Bool = false;
+	public var isSustainNote:Bool = false;
+	public var prevNote:Note;
 
 	function reload()
 	{
@@ -80,7 +86,25 @@ class Note extends FlxSprite
 			antialiasing = false;
 			updateHitbox();
 			playAnim('arrow');
+
+			if (isSustainNote && prevNote != null)
+			{
+				offsetX += width / 2;
+				playAnim('end');
+				updateHitbox();
+				offsetX -= width / 2;
+
+				if (prevNote.isSustainNote)
+				{
+					prevNote.playAnim('hold');
+					prevNote.setGraphicSize(prevNote.width,54);
+					prevNote.scale.y *=  conductor.stepCrochet / 100 * 0.9 *  PlayState.song.speed;
+					prevNote.updateHitbox();
+				}
+			}
 		}
+		if(isSustainNote)
+			multAlpha = 0.6;
 	}
 
 	public var anim:String = "";
@@ -107,7 +131,7 @@ class Note extends FlxSprite
 		downScroll = object.downScroll;
 
 		x = object.x + offsetX;
-		y = object.y + (data.time - conductor.time) * (0.45 * speed * (!object.downScroll ? 1 : -1)) + offsetY;
+		y = object.y + (data.time - conductor.time) * (0.45 * speed * (!object.downScroll ? 1 : -1)) + offsetY * Math.cos(90);
 		alpha = object.alpha * multAlpha;
 	}
 

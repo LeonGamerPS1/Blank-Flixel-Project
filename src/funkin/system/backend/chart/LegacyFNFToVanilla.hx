@@ -17,6 +17,7 @@ class LegacyFNFToVanilla
 				composer: null,
 				charter: null,
 				bpmMap: [],
+				stage: legacyJson.data.song.stage,
 
 				bpm: legacyJson.data.song.bpm,
 				speed: legacyJson.data.song.speed,
@@ -34,12 +35,12 @@ class LegacyFNFToVanilla
 
 			for (section in legacyJson.data.song.notes)
 			{
-				var sectionTime:Float = (beatLength * 4) * (legacyJson.data.song.notes.indexOf(section) + 1);
+				var sectionTime:Float = (beatLength * 4) * (legacyJson.data.song.notes.indexOf(section));
 				if (section.changeBPM == true)
 				{
 					beatLength = 60 / output.bpm;
 					beatLength *= 1000;
-					sectionTime = (beatLength * 4) * (legacyJson.data.song.notes.indexOf(section) + 1);
+					sectionTime = (beatLength * 4) * (legacyJson.data.song.notes.indexOf(section));
 
 					output.bpmMap.push({
 						time: sectionTime,

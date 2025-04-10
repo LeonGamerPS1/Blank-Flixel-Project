@@ -3,8 +3,9 @@ package funkin.system.backend;
 typedef SongMap =
 {
 	var displayName:String; // name of the song to be displayed
-	var players:Array<String>; // dad is first, boyfriend is second and gf is third
+	var players:Array<String>; // dad is first, gf is second and bf is third
 	var songName:String; // name of the song
+	var stage:String; // name of the stage
 
 	var speed:Float; // speed of the song
 	var bpm:Float; // beats per minute
@@ -53,7 +54,7 @@ class Song
 {
 	private static var _cache(default, null):Map<String, SongMap> = new Map<String, SongMap>();
 
-	public static function grabSong(songID:String = "Monster", jsonName:String = "default"):SongMap
+	public static function grabSong(songID:String = "Dreams of Roses", jsonName:String = "default"):SongMap
 	{
 		var id:String = songID + '-$jsonName';
 		if (_cache.exists(id))
@@ -75,6 +76,7 @@ class Song
 			tracks: {main: "music/poop.ogg"},
 			notes: [],
 			bpmMap: [],
+			stage:"",
 			events: []
 		};
 	}

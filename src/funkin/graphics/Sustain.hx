@@ -1,5 +1,8 @@
 package funkin.graphics;
 
+import flixel.addons.display.FlxRuntimeShader;
+import openfl.filters.GlowFilter;
+
 class Sustain extends NonRoundedSprite
 {
 	public var parent:Note;
@@ -23,8 +26,8 @@ class Sustain extends NonRoundedSprite
 	{
 		setGraphicSize(width, Math.abs((parent.sustainLength * 0.45 * parent.speed) - tail.height));
 		updateHitbox();
-		if (alpha != parent.alpha)
-			alpha = parent.alpha;
+		if (alpha != parent.alpha * 0.7)
+			alpha = parent.alpha * 0.7;
 
 		setPosition(parent.x + (parent.width - width) / 2, parent.y + parent.height / 2);
 		if (tail.cameras != cameras)
@@ -143,3 +146,4 @@ class Sustain extends NonRoundedSprite
 		super.destroy();
 	}
 }
+

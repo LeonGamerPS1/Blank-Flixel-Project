@@ -1,5 +1,6 @@
 package funkin.ui.debug;
 
+import openfl.Lib;
 import funkin.util.MemoryUtil;
 import openfl.text.TextFormat;
 import openfl.text.TextField;
@@ -23,13 +24,13 @@ class MemoryCounter extends TextField
 		defaultTextFormat = new TextFormat("_sans", 12, color);
 		text = "RAM: ";
 
-		#if flash
-		addEventListener(Event.ENTER_FRAME, function(e)
+		#if flash 
+		addEventListener(openfl.events.Event.ENTER_FRAME, function(e)
 		{
 			var time = Lib.getTimer();
-			__enterFrame(time - currentTime);
+			__enterFrame(flixel.FlxG.elapsed + 0);
 		});
-		#end
+		 #end
 	}
 
 	// Event Handlers

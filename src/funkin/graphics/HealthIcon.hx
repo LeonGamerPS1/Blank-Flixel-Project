@@ -35,7 +35,7 @@ class HealthIcon extends FlxSkewedSprite
 			{
 				var path = "icons/icon-" + newChar;
 				if (!Assets.exists(Paths.img('icons/icon-$newChar')))
-					path = "icons/icon-questionmark";
+					path = "icons/icon-face";
 
 				loadGraphic(Paths.image(path));
 				var frames:Array<Int> = [];

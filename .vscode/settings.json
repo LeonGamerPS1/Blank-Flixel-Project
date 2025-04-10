@@ -1,0 +1,13 @@
+{
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#494f49dd",
+        "activityBar.background": "#3d433daa"
+    },
+    "window.title": "${dirty}${activeEditorShort}${separator}${rootName}${separator}${profileName}${separator}${appName}${separator}[Branch: main]",
+    "cSpell.words": [
+        "hxvm",
+        "Luas",
+        "vanillafunctioncontinue",
+        "vanillafunctionstop"
+    ]
+}
