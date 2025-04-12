@@ -31,8 +31,9 @@
 	<haxelib name="flixel-addons" />
 	<haxelib name="moonchart" />
 	<haxelib name="haxeui-flixel" />
-	<haxelib name ="hxvm-lua" unless="hl"/>
-	<haxelib name ="linc_lua" unless="hl"/>
+	<haxelib name="haxeui-core" />
+	
+
 
 	<!--Optimise
 	inputs, be careful you will get null errors if you don't use conditionals in your game-->

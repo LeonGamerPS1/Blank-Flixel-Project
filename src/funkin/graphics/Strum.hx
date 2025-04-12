@@ -34,7 +34,7 @@ class Strum extends FlxSprite
 		{
 			frames = Paths.getSparrowAtlas('ui/base/noteSkins/$skin');
 
-			animation.addByPrefix('static', dirArray[Std.int(id * 1.0) % dirArray.length] + '0', 24, false);
+			animation.addByPrefix('static', 'arrow' + dirArray[Std.int(id * 1.0) % dirArray.length].toUpperCase(), 24, false);
 			animation.addByPrefix('confirm', dirArray[id % dirArray.length] + ' confirm0', 24, false);
 			animation.addByPrefix('press', dirArray[id % dirArray.length] + ' press0', 24, false);
 
@@ -47,9 +47,9 @@ class Strum extends FlxSprite
 		else
 		{
 			loadGraphic(Paths.image('ui/pixel/noteSkins/$skin'), true, 17, 17);
-			animation.add('static', [id % 4], 12, false);
-			animation.add('press', [id % 4 + 4, id % 4 + 8], 12, false);
-			animation.add('confirm', confirm[id % confirm.length], 12, false);
+			animation.add('static', [id % 4], 24, false);
+			animation.add('press', [id % 4 + 4, id % 4 + 8], 24, false);
+			animation.add('confirm', confirm[id % confirm.length], 24, false);
 			setGraphicSize(width * 6);
 			updateHitbox();
 

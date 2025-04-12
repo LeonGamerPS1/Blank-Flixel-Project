@@ -1,6 +1,5 @@
 package funkin.graphics;
 
-import flixel.addons.display.FlxRuntimeShader;
 import openfl.filters.GlowFilter;
 
 class Sustain extends NonRoundedSprite

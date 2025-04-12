@@ -36,11 +36,14 @@ class Main extends Sprite
 
 		Toolkit.init();
 
-		addChild(new FlxGame(1280, 720, PlayState, 120, 120, true));
+		addChild(new FlxGame(1280, 720, funkin.states.FreeplayState, 60, 60, true));
 		
+		WeekData.init();
 		ClientPrefs.load();
 		ClientPrefs.saveToFlixel();
 		haxe.ui.focus.FocusManager.instance.autoFocus = false;
+		FlxG.drawFramerate = ClientPrefs.data.fps;
+		FlxG.updateFramerate = ClientPrefs.data.fps;
 
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsCounter);
@@ -60,9 +63,7 @@ class Main extends Sprite
 
 	function setFlxDefines()
 	{
-		// FlxG.autoPause = false;
-		FlxG.fixedTimestep = false;
-		FlxG.mouse.useSystemCursor = true;
+	
 	}
 
 	@:functionCode('

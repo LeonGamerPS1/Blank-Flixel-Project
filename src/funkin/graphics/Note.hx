@@ -37,8 +37,6 @@ class Note extends FlxSprite
 		this.isPixel = isPixel;
 		this.prevNote = prevNote;
 		this.isSustainNote = isSustainNote;
-	
-	
 
 		skin = 'NOTE_assets';
 	}
@@ -73,6 +71,22 @@ class Note extends FlxSprite
 
 			playAnim('arrow');
 			antialiasing = true;
+
+			if (isSustainNote && prevNote != null)
+			{
+				offsetX += width / 2;
+				playAnim('end');
+				scale.y = 1;
+				updateHitbox();
+				offsetX -= width / 2;
+
+				if (prevNote.isSustainNote)
+				{
+					prevNote.playAnim('hold');
+					prevNote.scale.y = 0.7 * conductor.stepCrochet / 100 * 1.5 * PlayState.song.speed;
+					prevNote.updateHitbox();
+				}
+			}
 		}
 		else
 		{
@@ -97,14 +111,14 @@ class Note extends FlxSprite
 				if (prevNote.isSustainNote)
 				{
 					prevNote.playAnim('hold');
-					prevNote.setGraphicSize(prevNote.width,54);
-					prevNote.scale.y *=  conductor.stepCrochet / 100 * 0.9 *  PlayState.song.speed;
+					prevNote.setGraphicSize(prevNote.width, 54);
+					prevNote.scale.y *= conductor.stepCrochet / 100 * 0.834 * PlayState.song.speed;
 					prevNote.updateHitbox();
 				}
 			}
 		}
-		if(isSustainNote)
-			multAlpha = 0.6;
+		if (isSustainNote)
+			multAlpha = 0.8;
 	}
 
 	public var anim:String = "";
@@ -135,12 +149,6 @@ class Note extends FlxSprite
 		alpha = object.alpha * multAlpha;
 	}
 
-	override function draw()
-	{
-		if (!wasGoodHit)
-			super.draw();
-	}
-
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -149,7 +157,10 @@ class Note extends FlxSprite
 
 		if (!mustPress)
 		{
-			if (data.time <= conductor.time)
+			if (data.time <= conductor.time
+				|| isSustainNote
+				&& prevNote.wasGoodHit
+				&& (data.time < conductor.time + (Conductor.safeZoneOffset * 0.5)))
 				wasGoodHit = true;
 
 			canBeHit = false;
@@ -164,6 +175,34 @@ class Note extends FlxSprite
 
 			if (data.time < conductor.time - Conductor.safeZoneOffset && !wasGoodHit)
 				tooLate = true;
+		}
+	}
+
+	public function clipToStrumNote(myStrum:Strum)
+	{
+		var center:Float = myStrum.y + offsetY + (160 * 0.7) / 2;
+		if ((mustPress || !ignoreNote) && (wasGoodHit || (prevNote.wasGoodHit && !canBeHit)))
+		{
+			var swagRect:FlxRect = clipRect;
+			if (swagRect == null)
+				swagRect = new FlxRect(0, 0, frameWidth, frameHeight);
+
+			if (myStrum.downScroll)
+			{
+				if (y - offset.y * scale.y + height >= center)
+				{
+					swagRect.width = frameWidth;
+					swagRect.height = (center - y) / scale.y;
+					swagRect.y = frameHeight - swagRect.height;
+				}
+			}
+			else if (y + offset.y * scale.y <= center)
+			{
+				swagRect.y = (center - y) / scale.y;
+				swagRect.width = width / scale.x;
+				swagRect.height = (height / scale.y) - swagRect.y;
+			}
+			clipRect = swagRect;
 		}
 	}
 }

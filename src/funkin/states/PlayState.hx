@@ -1,7 +1,6 @@
 package funkin.states;
 
 import haxe.io.Path;
-import funkin.shaders.PixelPerfect;
 import openfl.filters.ShaderFilter;
 import funkin.gameplay.stages.BaseStage;
 import funkin.interfaces.IStageState;
@@ -478,27 +477,11 @@ class PlayState extends flixel.FlxState implements IStageState
 			var strum = getStrum(daNote.data);
 			daNote.followObject(strum, songSpeed);
 
-			var _maxTime:Float = daNote.data.time + daNote.data.length;
-
 			if (!daNote.mustPress && daNote.wasGoodHit)
-			{
-				var retVal:Dynamic = callOnLuas('opponentNoteHitPre', [daNote.data.time, daNote.data.data, daNote.data.length, daNote.data.type]);
-				if (retVal != LuaScript.FUNCTION_STOP)
-				{
-					strum.r = conductor.stepCrochet * 1.5 / 1000;
-					callOnLuas('opponentNoteHit', [daNote.data.time, daNote.data.data, daNote.data.length, daNote.data.type]);
+				opponentNoteHit(daNote);
 
-					dad.confirmAnimation(daNote, !daNote.wasHitByOpponent);
-					if (!daNote.wasHitByOpponent)
-					{
-						strum.playAnim('confirm', true);
-						daNote.wasHitByOpponent = true;
-					}
-					invalidateNote(daNote);
-				}
-				else
-					daNote.wasGoodHit = false;
-			}
+			if (daNote.isSustainNote)
+				daNote.clipToStrumNote(strum);
 
 			if (daNote.tooLate)
 			{
@@ -515,6 +498,25 @@ class PlayState extends flixel.FlxState implements IStageState
 			}
 		}
 		keyShit();
+	}
+
+	public function opponentNoteHit(daNote:Note)
+	{
+		if (!daNote.wasHitByOpponent)
+		{
+			var strum = getStrum(daNote.data);
+			var retVal:Dynamic = callOnLuas('opponentNoteHitPre', [daNote.data.time, daNote.data.data, daNote.data.length, daNote.data.type]);
+
+			if (retVal == LuaScript.FUNCTION_STOP)
+				return;
+			callOnLuas('opponentNoteHit', [daNote.data.time, daNote.data.data, daNote.data.length, daNote.data.type]);
+
+			dad.confirmAnimation(daNote);
+			daNote.wasHitByOpponent = true;
+
+			if (!daNote.isSustainNote)
+				invalidateNote(daNote);
+		}
 	}
 
 	public var unspawnNotes:Array<Note> = [];
@@ -611,23 +613,29 @@ class PlayState extends flixel.FlxState implements IStageState
 				hitNotes.push(note);
 		});
 
+		notes.forEachAlive((daNote:Note) ->
+		{
+			if (daNote.canBeHit && daNote.mustPress && !daNote.wasGoodHit)
+			{
+				hitNotes.push(daNote);
+				directions.push(daNote.data.data % 4);
+			}
+		});
+
 		if (pressed.contains(true))
 		{
-			notes.forEachAlive((daNote:Note) ->
-			{
-				if (daNote.canBeHit && daNote.mustPress && !daNote.wasGoodHit)
-				{
-					hitNotes.push(daNote);
-					directions.push(daNote.data.data % 4);
-				}
-			});
-
 			for (shit in 0...pressed.length)
 				if (pressed[shit] && !directions.contains(shit) && hitNotes.length > 0)
 					noteMiss(shit);
 
 			for (coolNote in hitNotes)
-				if (pressed[coolNote.data.data % 4])
+				if (pressed[coolNote.data.data % 4] && !coolNote.isSustainNote)
+					goodNoteHit(coolNote);
+		}
+		if (holding.contains(true))
+		{
+			for (coolNote in hitNotes)
+				if (holding[coolNote.data.data % 4] && coolNote.isSustainNote && coolNote.canBeHit && !coolNote.wasGoodHit)
 					goodNoteHit(coolNote);
 		}
 	}
@@ -718,7 +726,8 @@ class PlayState extends flixel.FlxState implements IStageState
 		}
 
 		callOnLuas('goodNoteHit', [coolNote.data.time, coolNote.data.data, coolNote.data.length, coolNote.data.type]);
-		invalidateNote(coolNote);
+		if (!coolNote.isSustainNote)
+			invalidateNote(coolNote);
 	}
 
 	function set_health(value:Float):Float
