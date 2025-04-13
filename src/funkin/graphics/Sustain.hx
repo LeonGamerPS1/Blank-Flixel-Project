@@ -1,148 +1,87 @@
 package funkin.graphics;
 
-import openfl.filters.GlowFilter;
-
-class Sustain extends NonRoundedSprite
+class Sustain extends TiledSprite
 {
-	public var parent:Note;
-	public var tail:NonRoundedSprite;
+	var parent:Note;
 
 	public function new(parent:Note)
 	{
-		super();
+		super(-3000, 0);
 		this.parent = parent;
-		reloadSustain(parent);
+		parent.sustain = this;
+
+		init();
 	}
 
-	public var scrollFromBottom:Bool = true;
-
-	public function reloadSustain(parent:Note)
+	function init()
 	{
-		normal();
-	}
-
-	override function draw()
-	{
-		setGraphicSize(width, Math.abs((parent.sustainLength * 0.45 * parent.speed) - tail.height));
-		updateHitbox();
-		if (alpha != parent.alpha * 0.7)
-			alpha = parent.alpha * 0.7;
-
-		setPosition(parent.x + (parent.width - width) / 2, parent.y + parent.height / 2);
-		if (tail.cameras != cameras)
-			tail.cameras = cameras;
-
-		if (tail.alpha != alpha)
-			tail.alpha = alpha;
-
-		if (tail.x != x)
-			tail.x = x;
-		tail.y = y + (!parent.downScroll ? height : (-height - tail.height));
-
-		if (tail.flipY != flipY)
-			tail.flipY = flipY;
-		if (parent.downScroll)
-		{
-			flipY = true;
-			y += -height;
-		}
+		if (parent.isPixel)
+			pixel();
 		else
-			flipY = false;
-
-		if (parent.wasGoodHit)
-			clip();
-		super.draw();
-
-		tail.draw();
+			normal();
 	}
 
-	function normal()
+	function pixel()
 	{
-		var size = !parent.isPixel ? 0.7 : 6;
 		frames = parent.frames;
 		animation.copyFrom(parent.animation);
 
 		animation.play('hold');
-		updateHitbox();
-		@:privateAccess
-		setGraphicSize(width * size);
+		setTail('end');
 		updateHitbox();
 
-		tail = new NonRoundedSprite(x, y);
-		tail.frames = frames;
-		tail.animation.copyFrom(animation);
-		tail.animation.play('end');
-		tail.updateHitbox();
-
-		tail.setGraphicSize(tail.width * size);
-		tail.updateHitbox();
-		tail.antialiasing = parent.antialiasing;
+		setGraphicSize(width * 5);
+		updateHitbox();
 	}
 
-	inline public function clip()
+	function normal()
 	{
-		var center:Float = parent.clipPoint.y;
+		frames = parent.frames;
+		animation.copyFrom(parent.animation);
 
-		var swagRect:FlxRect = clipRect;
-		if (swagRect == null)
-			swagRect = new FlxRect(0, 0, frameWidth, frameHeight);
+		animation.play('hold');
+		setTail('end');
+		updateHitbox();
 
-		if (parent.downScroll)
-		{
-			if (y - offset.y * scale.y + height >= center)
-			{
-				swagRect.width = frameWidth;
-				swagRect.height = (center - y) / scale.y;
-				swagRect.y = frameHeight - swagRect.height;
-			}
-		}
-		else if (y + offset.y * scale.y <= center && !parent.downScroll)
-		{
-			swagRect.y = (center - y) / scale.y;
-			swagRect.width = width / scale.x;
-			swagRect.height = (height / scale.y) - swagRect.y;
-		}
+		setGraphicSize(width * 0.7);
+		updateHitbox();
 
-		clipRect = swagRect;
-		clipTail();
+		antialiasing = ClientPrefs.data.antialiasing;
 	}
 
-	inline public function clipTail()
-	{
-		var center:Float = parent.clipPoint.y;
-		var tailEnd = tail;
-		var isDownscroll = parent.downScroll;
-		if (clipRect.height < 0)
-		{
-			var swagRect:FlxRect = tailEnd.clipRect;
-			if (swagRect == null)
-				swagRect = FlxRect.get(0, 0, isDownscroll ? tailEnd.frameWidth : tailEnd.width / tailEnd.scale.x, tailEnd.frameHeight);
+	static public var colArray:Array<FlxColor> = [FlxColor.PURPLE, FlxColor.BLUE, FlxColor.GREEN, FlxColor.RED];
 
-			if (parent.downScroll)
-			{
-				if (tailEnd.y + tailEnd.height >= center)
-				{
-					swagRect.height = (center - tailEnd.y) / tailEnd.scale.y;
-					swagRect.y = tailEnd.frameHeight - swagRect.height;
-				}
-			}
-			else
-			{
-				if (tailEnd.y <= center)
-				{
-					swagRect.y = (center - tailEnd.y) / tailEnd.scale.y;
-					swagRect.height = (tailEnd.height / tailEnd.scale.y) - swagRect.y;
-				}
-			}
-			tailEnd.clipRect = swagRect;
-		}
+	override function draw()
+	{
+		var length:Float = parent.sustainLength;
+		if (shader != parent.shader)
+			shader = parent.shader;
+
+		var expectedHeight:Float = (length * 0.45 * parent.speed) + (tailHeight() - 10);
+		if (height != expectedHeight)
+			this.height = Math.max(expectedHeight, 0);
+
+		if (alpha != parent.alpha)
+			alpha = parent.alpha;
+
+		// regenPos();
+
+		super.draw();
 	}
 
-	override function destroy()
+	public function regenPos()
 	{
-		tail.destroy();
-		tail = null;
-		super.destroy();
+		setPosition(parent.x + ((parent.width - width) * 0.5), parent.y + (parent.height * 0.5));
+
+		var calcAngle:Float = 0;
+		calcAngle += parent.sustainAngle;
+		if (parent.downScroll) // fuck you no directional scrolling for downscroll /j
+		{
+			angle = 0;
+			flipY = true;
+			y -= height;
+		}
+		else
+			angle = calcAngle;
 	}
 }
-

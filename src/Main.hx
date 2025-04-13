@@ -36,7 +36,7 @@ class Main extends Sprite
 
 		Toolkit.init();
 
-		addChild(new FlxGame(1280, 720, funkin.states.FreeplayState, 60, 60, true));
+		addChild(new FunkinGame());
 		
 		WeekData.init();
 		ClientPrefs.load();

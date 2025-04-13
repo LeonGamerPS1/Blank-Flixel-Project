@@ -24,6 +24,7 @@ class PlayState extends flixel.FlxState implements IStageState
 
 	public var camHUD:FlxCamera;
 	public var uiGroup:FlxGroup = new FlxGroup();
+
 	public var plrStrums:StrumLine;
 	public var cpuStrums:StrumLine;
 
@@ -134,7 +135,14 @@ class PlayState extends flixel.FlxState implements IStageState
 		plrStrums = new StrumLine(downScroll, true);
 		uiGroup.add(plrStrums);
 
+		for (_ in [cpuStrums, plrStrums])
+			for (__ in cpuStrums)
+				uiGroup.add(__.cover);
+
+		sustains = new FlxTypedGroup<Sustain>();
 		notes = new FlxTypedGroup<Note>();
+
+		uiGroup.add(sustains);
 		uiGroup.add(notes);
 
 		healthBar = new Bar(0, !downScroll ? FlxG.height - 100 : 100, 'healthBar', () ->
@@ -183,35 +191,7 @@ class PlayState extends flixel.FlxState implements IStageState
 		startCallback();
 	}
 
-	function initNotes()
-	{
-		for (note in song.notes)
-		{
-			var oldNote:Note;
-			if (unspawnNotes.length > 0)
-				oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
-			else
-				oldNote = null;
-
-			var swagNote:Note = new Note(note, conductor, false, isPixelStage, oldNote);
-			unspawnNotes.push(swagNote);
-
-			if (note.length > 0)
-				for (sus in 0...Math.floor(note.length / conductor.stepCrochet))
-				{
-					{
-						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
-						unspawnNotes.push(new Note({
-							time: note.time + (conductor.stepCrochet * sus) + (conductor.stepCrochet / songSpeed),
-							data: note.data,
-							type: note.type,
-							length: 0
-						}, conductor, true, isPixelStage, oldNote));
-					}
-				}
-		}
-		unspawnNotes.sort(sortNotesByTimeHelperUnspawn);
-	}
+	function initNotes() {}
 
 	public var lastBpmChangeIndex:Int = 0;
 	public var lastNoteIndex:Int = 0;
@@ -409,22 +389,32 @@ class PlayState extends flixel.FlxState implements IStageState
 
 		if (startedCountdown)
 		{
-			if (unspawnNotes[0] != null)
+			if (song.notes[lastNoteIndex] != null)
 			{
 				var time:Float = 3000;
 				if (songSpeed < 1)
 					time /= songSpeed;
 
-				if (unspawnNotes[0].data.time - conductor.time < time)
+				if (song.notes[lastNoteIndex].time - conductor.time < time)
 				{
-					notes.insert(0, unspawnNotes[0]);
+					var dunceNote:Note = new Note(song.notes[lastNoteIndex], conductor, isPixelStage);
+
+					notes.insert(0, dunceNote);
 					notes.sort(sortNotesByTimeHelper, FlxSort.DESCENDING);
-					unspawnNotes.remove(unspawnNotes[0]);
+					lastNoteIndex++;
+
+					if (dunceNote.data.length > 0)
+					{
+						var sustain:Sustain = new Sustain(dunceNote);
+						dunceNote.y = 6000;
+						sustain.regenPos();
+						sustains.add(sustain);
+					}
 				}
 			}
 		}
 
-		var multi = 55;
+		var multi = 15;
 
 		var mult:Float = FlxMath.lerp(1, iconP1.scale.x, Math.exp(-elapsed * multi));
 		iconP1.scale.set(mult, mult);
@@ -440,6 +430,9 @@ class PlayState extends flixel.FlxState implements IStageState
 
 		iconP1.x = (healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset));
 		iconP2.x = (healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset));
+
+		for (_ in [iconP1, iconP2])
+			_.origin.y = _.frameHeight;
 
 		if (healthBar.percent < 20)
 		{
@@ -467,10 +460,6 @@ class PlayState extends flixel.FlxState implements IStageState
 			lastEventIndex++;
 		}
 
-		for (_ in cpuStrums)
-			if (_.animation.finished)
-				_.playAnim('static');
-
 		keyShit();
 		for (daNote in notes)
 		{
@@ -480,17 +469,60 @@ class PlayState extends flixel.FlxState implements IStageState
 			var strum = getStrum(daNote.data);
 			daNote.followObject(strum, songSpeed);
 
-			if (!daNote.mustPress && daNote.wasGoodHit)
-				opponentNoteHit(daNote);
+			if (daNote.sustain != null)
+				daNote.clipSustain(strum);
 
-			if (daNote.isSustainNote)
-				daNote.clipToStrumNote(strum);
+			var _maxTime:Float = daNote.data.time + daNote.data.length;
+
+			if (!daNote.mustPress && daNote.wasGoodHit)
+			{
+				strum.r = conductor.stepCrochet * 1.5 / 1000;
+
+				if (!daNote.isPixel && daNote.sustainLength > 0)
+					strum.cover.visible = true;
+				dad.confirmAnimation(daNote, !daNote.wasHitByOpponent);
+				if (!daNote.wasHitByOpponent)
+				{
+					strum.playAnim(daNote.sustainLength > 0 ? 'confirm-hold' : 'confirm', true);
+					daNote.wasHitByOpponent = true;
+				}
+			}
+
+			if (!playCpu
+				&& daNote.wasGoodHit
+				&& strum.anim != "confirm"
+				&& daNote.mustPress
+				&& daNote.sustainLength > 0
+				&& !(_maxTime - (conductor.stepCrochet) < conductor.time))
+			{
+				invalidateNote(daNote);
+				return;
+			}
+
+			if (daNote.wasGoodHit && daNote.mustPress && !daNote.isPixel && daNote.sustainLength > 0)
+				strum.cover.visible = true;
+
+			if (daNote.wasGoodHit && _maxTime < conductor.time)
+			{
+				if (daNote.sustain != null)
+					strum.playAnim(daNote.mustPress ? "pressed" : "static", true);
+				strum.cover.visible = false;
+				invalidateNote(daNote);
+			}
 
 			if (conductor.time - daNote.data.time > (350 / song.speed))
 			{
 				if (daNote.mustPress && !daNote.ignoreNote && !daNote.wasGoodHit && !daNote.missed)
+				{
 					noteMiss(daNote.data.data % 4);
+					strum.cover.visible = false;
+					daNote.missed = true;
+					daNote.multAlpha = 0.6;
+				}
+			}
 
+			if (conductor.time - daNote.data.time - daNote.sustainLength > (350 / song.speed))
+			{
 				daNote.active = daNote.visible = false;
 				invalidateNote(daNote);
 			}
@@ -499,27 +531,7 @@ class PlayState extends flixel.FlxState implements IStageState
 		super.update(elapsed);
 	}
 
-	public function opponentNoteHit(daNote:Note)
-	{
-		if (!daNote.wasHitByOpponent)
-		{
-			var strum = getStrum(daNote.data);
-			var retVal:Dynamic = callOnLuas('opponentNoteHitPre', [daNote.data.time, daNote.data.data, daNote.data.length, daNote.data.type]);
-
-			if (retVal == LuaScript.FUNCTION_STOP)
-				return;
-			callOnLuas('opponentNoteHit', [daNote.data.time, daNote.data.data, daNote.data.length, daNote.data.type]);
-
-			dad.confirmAnimation(daNote);
-			daNote.wasHitByOpponent = true;
-			strum.playAnim('confirm');
-
-			if (!daNote.isSustainNote)
-				invalidateNote(daNote);
-		}
-	}
-
-	public var unspawnNotes:Array<Note> = [];
+	public var sustains:FlxTypedGroup<Sustain>;
 
 	public function triggerEvent(event:Event)
 	{
@@ -542,6 +554,11 @@ class PlayState extends flixel.FlxState implements IStageState
 
 	function invalidateNote(daNote:Note)
 	{
+		if (daNote.sustain != null)
+			daNote.sustain.destroy();
+		sustains.remove(daNote.sustain, true);
+		daNote.sustain = null;
+
 		daNote.destroy();
 		notes.remove(daNote, true);
 		daNote = null;
@@ -603,7 +620,10 @@ class PlayState extends flixel.FlxState implements IStageState
 				if (pressed[strum.id] && strum.anim != "confirm")
 					strum.playAnim('press');
 				else if (!holding[strum.id])
+				{
+					strum.cover.visible = false;
 					strum.playAnim('static', true);
+				}
 			}
 		}
 
@@ -629,13 +649,7 @@ class PlayState extends flixel.FlxState implements IStageState
 					noteMiss(shit);
 
 			for (coolNote in hitNotes)
-				if (pressed[coolNote.data.data % 4] && !coolNote.isSustainNote)
-					goodNoteHit(coolNote);
-		}
-		if (holding.contains(true))
-		{
-			for (coolNote in hitNotes)
-				if (holding[coolNote.data.data % 4] && coolNote.isSustainNote && coolNote.canBeHit && !coolNote.wasGoodHit)
+				if (pressed[coolNote.data.data % 4])
 					goodNoteHit(coolNote);
 		}
 	}
@@ -646,7 +660,7 @@ class PlayState extends flixel.FlxState implements IStageState
 			return;
 		for (icon in [iconP1, iconP2])
 		{
-			icon.scale.set(1.2, 1.2);
+			icon.scale.set(1.25, 1.25);
 			icon.updateHitbox();
 		}
 
@@ -707,10 +721,6 @@ class PlayState extends flixel.FlxState implements IStageState
 
 	function goodNoteHit(coolNote:Note)
 	{
-		var retVal:Dynamic = callOnLuas('goodNoteHitPre', [coolNote.data.time, coolNote.data.data, coolNote.data.length, coolNote.data.type]);
-		if (retVal == LuaScript.FUNCTION_STOP)
-			return;
-
 		var strum = getStrum(coolNote.data);
 
 		var _maxTime:Float = coolNote.data.time + coolNote.data.length;
@@ -725,8 +735,7 @@ class PlayState extends flixel.FlxState implements IStageState
 			strum.playAnim("confirm", true);
 		}
 
-		callOnLuas('goodNoteHit', [coolNote.data.time, coolNote.data.data, coolNote.data.length, coolNote.data.type]);
-		if (!coolNote.isSustainNote)
+		if (coolNote.wasGoodHit && _maxTime < conductor.time)
 			invalidateNote(coolNote);
 	}
 

@@ -19,14 +19,16 @@ class Note extends FlxSprite
 
 	public var noteType:String = "normal";
 	public var conductor:Conductor;
-	public var sustain:Sustain;
+
 	public var sustainLength:Float = 0;
 	public var clipPoint:FlxPoint = FlxPoint.get(0, 0);
 	public var ignoreNote:Bool = false;
 	public var tooLate:Bool = false;
 	public var missed:Bool = false;
+	public var sustainAngle:Float = 0;
+	public var sustain(default, set):Sustain;
 
-	public function new(data:NoteData, conductor:Conductor, isSustainNote:Bool = false, ?isPixel:Bool = false, ?prevNote:Note)
+	public function new(data:NoteData, conductor:Conductor, ?isPixel:Bool = false, ?prevNote:Note)
 	{
 		super();
 		this.data = data;
@@ -36,7 +38,6 @@ class Note extends FlxSprite
 		this.sustainLength = data.length;
 		this.isPixel = isPixel;
 		this.prevNote = prevNote;
-		this.isSustainNote = isSustainNote;
 
 		skin = 'NOTE_assets';
 	}
@@ -51,7 +52,6 @@ class Note extends FlxSprite
 	}
 
 	public var isPixel:Bool = false;
-	public var isSustainNote:Bool = false;
 	public var prevNote:Note;
 
 	function reload()
@@ -71,22 +71,6 @@ class Note extends FlxSprite
 
 			playAnim('arrow');
 			antialiasing = true;
-
-			if (isSustainNote && prevNote != null)
-			{
-				offsetX += width / 2;
-				playAnim('end');
-				scale.y = 1;
-				updateHitbox();
-				offsetX -= width / 2;
-
-				if (prevNote.isSustainNote)
-				{
-					prevNote.playAnim('hold');
-					prevNote.scale.y = 0.7 * conductor.stepCrochet / 100 * 1.5 * PlayState.song.speed;
-					prevNote.updateHitbox();
-				}
-			}
 		}
 		else
 		{
@@ -100,25 +84,7 @@ class Note extends FlxSprite
 			antialiasing = false;
 			updateHitbox();
 			playAnim('arrow');
-
-			if (isSustainNote && prevNote != null)
-			{
-				offsetX += width / 2;
-				playAnim('end');
-				updateHitbox();
-				offsetX -= width / 2;
-
-				if (prevNote.isSustainNote)
-				{
-					prevNote.playAnim('hold');
-					prevNote.setGraphicSize(prevNote.width, 54);
-					prevNote.scale.y *= conductor.stepCrochet / 100 * 0.834 * PlayState.song.speed;
-					prevNote.updateHitbox();
-				}
-			}
 		}
-		if (isSustainNote)
-			multAlpha = 0.8;
 	}
 
 	public var anim:String = "";
@@ -134,8 +100,17 @@ class Note extends FlxSprite
 
 	public var speed:Float = 1;
 
+	override function draw():Void
+	{
+		if (!wasGoodHit)
+			super.draw();
+	}
+
 	public function followObject(object:Strum, ?speed:Float = 1)
 	{
+		if (sustain != null)
+			sustain.regenPos();
+
 		if (this.speed != speed)
 			this.speed = speed;
 
@@ -147,7 +122,6 @@ class Note extends FlxSprite
 		x = object.x + offsetX;
 		y = object.y + (data.time - conductor.time) * (0.45 * speed * (!object.downScroll ? 1 : -1)) + offsetY * Math.cos(90);
 		alpha = object.alpha * multAlpha;
-		flipY = object.downScroll && isSustainNote;
 	}
 
 	override function update(elapsed:Float)
@@ -176,32 +150,34 @@ class Note extends FlxSprite
 		}
 	}
 
-	public function clipToStrumNote(myStrum:Strum)
+	function set_sustain(value:Sustain):Sustain
 	{
+		sustain = value;
+		@:privateAccess
+		if (value != null)
+			value.parent = this;
 
-		var center:Float = myStrum.y + offsetY + 50;
-		if ((mustPress || !ignoreNote) && (wasGoodHit || (prevNote.wasGoodHit && !canBeHit)))
-		{
-			var swagRect:FlxRect = clipRect;
-			if (swagRect == null)
-				swagRect = new FlxRect(0, 0, frameWidth, frameHeight);
+		return sustain = value;
+	}
 
-			if (myStrum.downScroll)
-			{
-				if (y - offset.y * scale.y + height >= center)
-				{
-					swagRect.width = frameWidth;
-					swagRect.height = (center - y) / scale.y;
-					swagRect.y = frameHeight - swagRect.height;
-				}
-			}
-			else if (y + offset.y * scale.y <= center)
-			{
-				swagRect.y = (center - y) / scale.y;
-				swagRect.width = width / scale.x;
-				swagRect.height = (height / scale.y) - swagRect.y;
-			}
-			clipRect = swagRect;
-		}
+	public function clipSustain(strum:Strum):Void
+	{
+		if (sustain == null)
+			return;
+		var strumCenter:Float = strum.y + strum.height * 0.5;
+
+		if (sustain.clipRegion == null)
+			sustain.clipRegion = FlxRect.get(0, 0, sustain.width, sustain.height);
+
+		sustain.clipRegion.y = strumCenter - sustain.y;
+
+		if (strum.downScroll)
+			sustain.clipRegion.y = sustain.height - sustain.clipRegion.y;
+	}
+
+	public function regenSustainpos()
+	{
+		if (sustain != null)
+			sustain.regenPos();
 	}
 }

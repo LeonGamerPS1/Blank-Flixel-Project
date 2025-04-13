@@ -15,6 +15,9 @@ class Strum extends FlxSprite
 		this.id = id;
 		this.isPixel = isPixel;
 		skin = 'NOTE_assets';
+
+		cover = new HoldCover(id, this);
+		cover.visible = false;
 	}
 
 	function set_skin(value:String):String
@@ -28,6 +31,8 @@ class Strum extends FlxSprite
 
 	var confirm = [[12, 16], [13, 17], [14, 18], [15, 19]];
 
+	public var cover:HoldCover;
+
 	function reload()
 	{
 		if (!isPixel)
@@ -36,6 +41,7 @@ class Strum extends FlxSprite
 
 			animation.addByPrefix('static', 'arrow' + dirArray[Std.int(id * 1.0) % dirArray.length].toUpperCase(), 24, false);
 			animation.addByPrefix('confirm', dirArray[id % dirArray.length] + ' confirm0', 24, false);
+			animation.addByIndices('confirm-hold', dirArray[id % dirArray.length] + ' confirm0', [0, 1, 2, 3, 0, 1, 2, 3], '', 20, false);
 			animation.addByPrefix('press', dirArray[id % dirArray.length] + ' press0', 24, false);
 
 			setGraphicSize(width * 0.7);
@@ -47,9 +53,10 @@ class Strum extends FlxSprite
 		else
 		{
 			loadGraphic(Paths.image('ui/pixel/noteSkins/$skin'), true, 17, 17);
-			animation.add('static', [id % 4], 24, false);
-			animation.add('press', [id % 4 + 4, id % 4 + 8], 24, false);
-			animation.add('confirm', confirm[id % confirm.length], 24, false);
+			animation.add('static', [id % 4], 12, false);
+			animation.add('press', [id % 4 + 4, id % 4 + 8], 12, false);
+			animation.add('confirm', confirm[id % confirm.length], 12, false);
+			animation.add('confirm-hold', confirm[id % confirm.length].copy().concat(confirm[id % confirm.length]), 12, false);
 			setGraphicSize(width * 6);
 			updateHitbox();
 
@@ -66,8 +73,7 @@ class Strum extends FlxSprite
 
 		anim = name;
 		centerOffsets();
-		if(!isPixel && name == 'confirm')
-			offset.subtract(15, 15);
+		centerOrigin();
 	}
 
 	override function update(elapsed:Float)
@@ -81,6 +87,16 @@ class Strum extends FlxSprite
 				playAnim('static');
 			}
 		}
+		if (cover != null && cover.cameras != cameras)
+			cover.cameras = cameras;
+
 		super.update(elapsed);
+	}
+
+	override function draw()
+	{
+		super.draw();
+		if (cover != null && cover.visible && cover.exists)
+			cover.setPosition(x - width, (y - height) + (160 * 0.7) / 7);
 	}
 }
