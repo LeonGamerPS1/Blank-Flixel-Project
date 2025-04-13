@@ -467,8 +467,11 @@ class PlayState extends flixel.FlxState implements IStageState
 			lastEventIndex++;
 		}
 
-		super.update(elapsed);
+		for (_ in cpuStrums)
+			if (_.animation.finished)
+				_.playAnim('static');
 
+		keyShit();
 		for (daNote in notes)
 		{
 			if (!daNote.alive || !daNote.exists || !daNote.active)
@@ -483,21 +486,17 @@ class PlayState extends flixel.FlxState implements IStageState
 			if (daNote.isSustainNote)
 				daNote.clipToStrumNote(strum);
 
-			if (daNote.tooLate)
+			if (conductor.time - daNote.data.time > (350 / song.speed))
 			{
 				if (daNote.mustPress && !daNote.ignoreNote && !daNote.wasGoodHit && !daNote.missed)
 					noteMiss(daNote.data.data % 4);
-				daNote.missed = true;
-				daNote.multAlpha = 0.6;
-			}
 
-			if (conductor.time - daNote.data.time > (350 / song.speed))
-			{
 				daNote.active = daNote.visible = false;
 				invalidateNote(daNote);
 			}
 		}
-		keyShit();
+
+		super.update(elapsed);
 	}
 
 	public function opponentNoteHit(daNote:Note)
@@ -513,6 +512,7 @@ class PlayState extends flixel.FlxState implements IStageState
 
 			dad.confirmAnimation(daNote);
 			daNote.wasHitByOpponent = true;
+			strum.playAnim('confirm');
 
 			if (!daNote.isSustainNote)
 				invalidateNote(daNote);

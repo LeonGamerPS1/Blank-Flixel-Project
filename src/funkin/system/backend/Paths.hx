@@ -49,7 +49,7 @@ class Paths
 			var bitmap:BitmapData = graphic.bitmap;
 			bitmap.disposeImage();
 
-			trace('[SUCCESS] Successfully cached OpenflImagePath($path).');
+
 
 			graphic.destroyOnNoUse = false;
 			graphic.persist = true;

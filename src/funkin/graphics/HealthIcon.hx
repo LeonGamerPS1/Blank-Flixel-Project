@@ -42,7 +42,7 @@ class HealthIcon extends FlxSkewedSprite
 
 				for (i in 0...Math.floor(width / 150))
 					frames.push(i);
-				trace(frames.length + ' frames found for icon $newChar');
+
 
 				if (frames.contains(2))
 					winningIconFrame = 2; // actually the third frame but haxe shitty starts array stuff at 0 iirc

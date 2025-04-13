@@ -66,7 +66,8 @@ class Strum extends FlxSprite
 
 		anim = name;
 		centerOffsets();
-		centerOrigin();
+		if(!isPixel && name == 'confirm')
+			offset.subtract(15, 15);
 	}
 
 	override function update(elapsed:Float)

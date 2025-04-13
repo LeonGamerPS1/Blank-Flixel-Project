@@ -147,6 +147,7 @@ class Note extends FlxSprite
 		x = object.x + offsetX;
 		y = object.y + (data.time - conductor.time) * (0.45 * speed * (!object.downScroll ? 1 : -1)) + offsetY * Math.cos(90);
 		alpha = object.alpha * multAlpha;
+		flipY = object.downScroll && isSustainNote;
 	}
 
 	override function update(elapsed:Float)
@@ -157,10 +158,7 @@ class Note extends FlxSprite
 
 		if (!mustPress)
 		{
-			if (data.time <= conductor.time
-				|| isSustainNote
-				&& prevNote.wasGoodHit
-				&& (data.time < conductor.time + (Conductor.safeZoneOffset * 0.5)))
+			if (data.time <= conductor.time)
 				wasGoodHit = true;
 
 			canBeHit = false;
@@ -180,7 +178,8 @@ class Note extends FlxSprite
 
 	public function clipToStrumNote(myStrum:Strum)
 	{
-		var center:Float = myStrum.y + offsetY + (160 * 0.7) / 2;
+
+		var center:Float = myStrum.y + offsetY + 50;
 		if ((mustPress || !ignoreNote) && (wasGoodHit || (prevNote.wasGoodHit && !canBeHit)))
 		{
 			var swagRect:FlxRect = clipRect;

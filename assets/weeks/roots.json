@@ -4,37 +4,72 @@
   "displayText": "Roots",
   "startUnlocked": true,
   "order": 7,
-  "difficulties": ["Hard"],
+  "difficulties": [
+    "Hard"
+  ],
   "songs": [
     {
       "name": "Roots",
       "freeplayIcon": "senpai",
-      "color": [34, 51, 68]
+      "color": [
+        34,
+        51,
+        68
+      ]
     },
     {
       "name": "Dreams of Roses",
       "freeplayIcon": "senpai",
-      "color": [34, 51, 68]
+      "color": [
+        34,
+        51,
+        68
+      ]
     },
     {
       "name": "Poems N Thorns",
       "freeplayIcon": "senpai",
-      "color": [34, 51, 68]
+      "color": [
+        34,
+        51,
+        68
+      ]
     },
     {
       "name": "Epiphany",
       "freeplayIcon": "senpai",
-      "color": [34, 51, 68]
+      "color": [
+        34,
+        51,
+        68
+      ]
     },
     {
       "name": "every-bambi-spam-song-be-like",
       "freeplayIcon": "bf",
-      "color": [34, 51, 68]
+      "color": [
+        34,
+        51,
+        68
+      ]
     },
     {
       "name": "fucking idiot",
       "freeplayIcon": "bf",
-      "color": [34, 51, 68]
+      "color": [
+        34,
+        51,
+        68
+      ]
+    },
+    {
+      "name": "Tormentor",
+      "freeplayIcon": "bf",
+      "color": [
+        34,
+        51,
+        68
+      ]
     }
   ]
 }
