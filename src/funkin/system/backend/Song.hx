@@ -63,6 +63,8 @@ class Song
 		{
 			var json = Json.parse(Assets.getText('assets/songs/$songID/$jsonName.json'));
 			_cache.set(id, json);
+			
+	
 			return Reflect.copy(json);
 		}
 		return {
@@ -76,7 +78,7 @@ class Song
 			tracks: {main: "music/poop.ogg"},
 			notes: [],
 			bpmMap: [],
-			stage:"",
+			stage: "",
 			events: []
 		};
 	}

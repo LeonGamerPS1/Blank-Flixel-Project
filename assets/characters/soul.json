@@ -3,7 +3,7 @@
   "texture_path": "Soul Boyfriend",
   "health_icon": "bf",
   "health_colors": [128, 0, 128],
-  "flipX": true,
+  "flipX": false,
   "animations": [
     {
       "name": "idle",

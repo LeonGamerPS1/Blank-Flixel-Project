@@ -97,6 +97,6 @@ class Strum extends FlxSprite
 	{
 		super.draw();
 		if (cover != null && cover.visible && cover.exists)
-			cover.setPosition(x - width, (y - height) + (160 * 0.7) / 7);
+			cover.setPosition(x + (width - cover.width) / 2 - 9, y - (height / 2));
 	}
 }

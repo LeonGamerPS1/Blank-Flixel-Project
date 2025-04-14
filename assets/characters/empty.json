@@ -1,0 +1,24 @@
+{
+  "name": "bf-pixel",
+  "texture_path": "bfPixel",
+  "health_icon": "bf-pixel",
+  "antialiasing": false,
+  "pixelated": true,
+  "health_colors": [128, 0, 128],
+  "flipX": true,
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "BF RIGHT MISS instance 1",
+      "fps": 24,
+      "looped": false,
+      "x": 0,
+      "y": 0
+    }
+  ],
+  "position": [0, 350],
+  "camera_position": [50, -60],
+  "scale": 0,
+  "dancer": false,
+  "singDuration": 6
+}

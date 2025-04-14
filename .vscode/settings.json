@@ -5,6 +5,7 @@
     },
     "window.title": "${dirty}${activeEditorShort}${separator}${rootName}${separator}${profileName}${separator}${appName}${separator}[Branch: main]",
     "cSpell.words": [
+        "bfmind",
         "hxvm",
         "Luas",
         "vanillafunctioncontinue",

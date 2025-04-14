@@ -36,7 +36,7 @@ class PlayState extends flixel.FlxState implements IStageState
 	public var playCpu:Bool = false;
 
 	public var health(default, set):Float = 1;
-	public var trackHealth:Float = 1;
+	public var trackHealth:Float = 15;
 	public var downScroll:Bool = false;
 	public var stages:Array<BaseStage> = [];
 
@@ -135,15 +135,17 @@ class PlayState extends flixel.FlxState implements IStageState
 		plrStrums = new StrumLine(downScroll, true);
 		uiGroup.add(plrStrums);
 
-		for (_ in [cpuStrums, plrStrums])
-			for (__ in cpuStrums)
-				uiGroup.add(__.cover);
-
 		sustains = new FlxTypedGroup<Sustain>();
 		notes = new FlxTypedGroup<Note>();
 
 		uiGroup.add(sustains);
 		uiGroup.add(notes);
+
+		
+		for (_ in [cpuStrums, plrStrums])
+			for (__ in _)
+				uiGroup.add(__.cover);
+
 
 		healthBar = new Bar(0, !downScroll ? FlxG.height - 100 : 100, 'healthBar', () ->
 		{
@@ -313,6 +315,7 @@ class PlayState extends flixel.FlxState implements IStageState
 
 		isPixelStage = stageJson.isPixel == true;
 
+
 		switch curStage
 		{
 			case "stage":
@@ -389,6 +392,7 @@ class PlayState extends flixel.FlxState implements IStageState
 
 		if (startedCountdown)
 		{
+			
 			if (song.notes[lastNoteIndex] != null)
 			{
 				var time:Float = 3000;
@@ -400,7 +404,7 @@ class PlayState extends flixel.FlxState implements IStageState
 					var dunceNote:Note = new Note(song.notes[lastNoteIndex], conductor, isPixelStage);
 
 					notes.insert(0, dunceNote);
-					notes.sort(sortNotesByTimeHelper, FlxSort.DESCENDING);
+				
 					lastNoteIndex++;
 
 					if (dunceNote.data.length > 0)
@@ -412,6 +416,7 @@ class PlayState extends flixel.FlxState implements IStageState
 					}
 				}
 			}
+			notes.sort(sortNotesByTimeHelper, FlxSort.DESCENDING);
 		}
 
 		var multi = 15;
@@ -504,9 +509,15 @@ class PlayState extends flixel.FlxState implements IStageState
 
 			if (daNote.wasGoodHit && _maxTime < conductor.time)
 			{
-				if (daNote.sustain != null)
-					strum.playAnim(daNote.mustPress ? "pressed" : "static", true);
 				strum.cover.visible = false;
+				if (daNote.sustainLength > 0) { 
+					strum.playAnim(daNote.mustPress ? "press" : "static", true);
+					if(daNote.mustPress) {
+						strum.cover.visible = true;
+						strum.cover.animation.play('splash', true);
+					}
+				}
+			
 				invalidateNote(daNote);
 			}
 
@@ -515,7 +526,7 @@ class PlayState extends flixel.FlxState implements IStageState
 				if (daNote.mustPress && !daNote.ignoreNote && !daNote.wasGoodHit && !daNote.missed)
 				{
 					noteMiss(daNote.data.data % 4);
-					strum.cover.visible = false;
+				
 					daNote.missed = true;
 					daNote.multAlpha = 0.6;
 				}
@@ -524,9 +535,12 @@ class PlayState extends flixel.FlxState implements IStageState
 			if (conductor.time - daNote.data.time - daNote.sustainLength > (350 / song.speed))
 			{
 				daNote.active = daNote.visible = false;
+				strum.cover.visible = false;
 				invalidateNote(daNote);
 			}
 		}
+		FlxG.camera.pixelPerfectRender = isPixelStage;
+		camHUD.pixelPerfectRender = isPixelStage;
 
 		super.update(elapsed);
 	}
@@ -619,7 +633,7 @@ class PlayState extends flixel.FlxState implements IStageState
 			{
 				if (pressed[strum.id] && strum.anim != "confirm")
 					strum.playAnim('press');
-				else if (!holding[strum.id])
+				else if (released[strum.id])
 				{
 					strum.cover.visible = false;
 					strum.playAnim('static', true);

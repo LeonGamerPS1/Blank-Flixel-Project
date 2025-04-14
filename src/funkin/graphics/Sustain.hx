@@ -61,8 +61,8 @@ class Sustain extends TiledSprite
 		if (height != expectedHeight)
 			this.height = Math.max(expectedHeight, 0);
 
-		if (alpha != parent.alpha)
-			alpha = parent.alpha;
+		if (alpha != parent.alpha * 0.7)
+			alpha = parent.alpha * 0.7;
 
 		// regenPos();
 
